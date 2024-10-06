@@ -66,3 +66,40 @@ console.log(flattenedArray);
 
 
 
+//Part-3:
+//Create a simple HTML element to hold text. Cache this HTML element into a JavaScript variable.
+//Write a function that takes a parameter n and adds a list of all prime numbers between one and n to your HTML element.
+//Once complete, use the alert() method to alert the user that the calculation is finished.
+
+const pEle = document.getElementById('prime');
+
+function isPrime(num) {
+    if (num <= 1) { return false; }
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) { return false; }
+    }
+    return true;
+}
+
+function displayPrimes(num) {
+    pEle.textContent = ''; //clearing previous results
+    let primes = [];
+    for (let i = 1; i <= num; i++) {
+        if (isPrime(i)) {
+            primes.push(i);
+        }
+    }
+    pEle.textContent = primes.join(', ')
+    alert('Calculation complete!');
+}
+
+//prompt user for n value
+const n = parseInt(prompt(`Enter a number: `));
+if (!isNaN(n) && n > 0) {
+    displayPrimes(n);
+} else {
+    alert(`Please enter a valid positive number.`);
+}
+
+
+
