@@ -1,6 +1,6 @@
 console.log(`Alab - Practical use of event loop`);
 
-//Part 1: Stack Overflow
+//#############Part 1: Stack Overflow
 let count = 0;
 function incrementCounter() {
     count++;
@@ -19,14 +19,13 @@ try {
 //The error.message property is part of the standard error object in JavaScript
 //when an exception is thrown, js creates an error object, it has several properties, one of which is message
 
-//Part 2: Trampolines
-//trampolining - eliminates stack overflow issue if implemented correctly.
 
+//#########Part 2: Trampolines
+//trampolining - eliminates stack overflow issue if implemented correctly.
 const factorial = (n) => {
     if (n === 0) return 1; // The base case, to stop recursion
     return n * factorial(n - 1); // The recursive call
 }
-
 //console.log(factorial(5));
 
 function flatten(arr) {
@@ -47,10 +46,8 @@ function flatten(arr) {
             };
         }
     }
-
     return trampoline(_flatten(arr, []));
 }
-
 function trampoline(fn) {
     let result = fn;
     while (typeof result === 'function') {
@@ -58,15 +55,12 @@ function trampoline(fn) {
     }
     return result;
 }
-
-
 let nestedArray = [1, [2, [3, 4], 5], 6];
 let flattenedArray = flatten(nestedArray);
 console.log(flattenedArray);
 
 
-
-//Part-3:
+//#############Part-3: Deferred Execution
 //Create a simple HTML element to hold text. Cache this HTML element into a JavaScript variable.
 //Write a function that takes a parameter n and adds a list of all prime numbers between one and n to your HTML element.
 //Once complete, use the alert() method to alert the user that the calculation is finished.
@@ -80,7 +74,6 @@ function isPrime(num) {
     }
     return true;
 }
-
 function displayPrimes(num, current = 1, primes = []) {
     //let primes = [];
     if (current > num) {
@@ -94,21 +87,7 @@ function displayPrimes(num, current = 1, primes = []) {
     pEle.textContent = primes.join(', ');
 
     setTimeout(() => displayPrimes(num, current + 1, primes), 0);
-
 }
-
-//function displayPrimes(num) {
-//    pEle.textContent = ''; //clearing previous results
-//    let primes = [];
-//    for (let i = 1; i <= num; i++) {
-//        if (isPrime(i)) {
-//            primes.push(i);
-//        }
-//    }
-//    pEle.textContent = primes.join(', ')
-//    alert('Calculation complete!');
-//}
-
 //prompt user for n value
 const n = parseInt(prompt(`Enter a number: `));
 if (!isNaN(n) && n > 0) {
@@ -116,6 +95,8 @@ if (!isNaN(n) && n > 0) {
 } else {
     alert(`Please enter a valid positive number.`);
 }
+
+//setTimeout - scheduling a function to be executed after a specified delay. The delay of 0ms, which means "as soon as possible" but after the current execution context is finished. 0ms is the Minimum Delay.
 
 
 

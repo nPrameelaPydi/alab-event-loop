@@ -104,3 +104,13 @@ factorial is a regular function that returns either the base case (1) or a funct
 trampoline is a regular function that takes a function as an argument and repeatedly calls it until it gets a non-function result.
 trampolinedFactorial is a regular function that takes a number n and returns the result of passing an anonymous function to trampoline. This anonymous function calls factorial(n).
 This implementation achieves the same result as the arrow function version, but uses traditional function syntax throughout. It allows for the calculation of larger factorials without risking a stack overflow error.
+
+###############
+
+Understanding setTimeout
+Asynchronous Execution:
+When you use setTimeout, you are scheduling a function to be executed after a specified delay. The delay can be 0ms, which means "as soon as possible" but after the current execution context is finished.
+Event Loop:
+JavaScript is single-threaded, meaning it can only execute one piece of code at a time. However, it has an event loop that handles asynchronous operations. When you use setTimeout, you push the function to a queue that the event loop will process once the current stack (the current executing code) is empty.
+Allowing Rendering:
+By using setTimeout(..., 0), you allow the browser to take a moment to render any changes to the UI before the next iteration of your function runs. This way, the user can see the output as it is being calculated rather than waiting for the entire process to finish before seeing anything.
