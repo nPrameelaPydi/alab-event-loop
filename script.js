@@ -8,14 +8,12 @@ function incrementCounter() {
     incrementCounter(); //recursive call
 }
 //incrementCounter()//func call to start recursion
-
 // Surround the initial function call in a try/catch block
 try {
     incrementCounter();
 } catch (error) {
     console.log("Error message: ", error.message)
 }
-
 //The error.message property is part of the standard error object in JavaScript
 //when an exception is thrown, js creates an error object, it has several properties, one of which is message
 
@@ -27,7 +25,6 @@ const factorial = (n) => {
     return n * factorial(n - 1); // The recursive call
 }
 //console.log(factorial(5));
-
 function flatten(arr) {
     function _flatten(arr, result) {
         if (arr.length === 0) return result;

@@ -16,11 +16,7 @@ Separation of State:
 By returning a function, you can capture the current state (like the array to be flattened and the accumulated result) without consuming additional stack space at that moment. This allows you to manage complex states over multiple iterations or calls.
 Use in Trampolining:
 Deferred execution is particularly useful in the trampolining pattern. The trampoline function repeatedly invokes the returned functions until a final result is achieved. This keeps the call stack from growing too deep and avoids stack overflow errors.
-Example in the Flatten Function
-In the provided code, here’s how deferred execution is applied:
 
-javascript
-Copy code
 if (Array.isArray(head)) {
     return function() {
         return _flatten(head.concat(tail), result);
@@ -39,71 +35,6 @@ State Management: It keeps the current state accessible without pushing new call
 Summary
 Deferred execution is a powerful programming technique that allows you to control when a piece of code runs. In the context of the flattening function, it enables safe handling of potentially deep recursive calls through the use of trampolining, maintaining state without risking stack overflow.
 
-***************
-
-Trampolining is a technique used to convert recursive functions into iterative ones, which helps avoid stack overflow errors in cases of deep recursion. The idea is to return a function instead of making a recursive call directly. This function, when called, will perform the next step of the computation.
-The three steps to writing a trampolined function are:
-Modify the recursive function to return a function (often called a thunk) instead of making a recursive call.
-Create a trampoline function that repeatedly executes these returned functions until a final result is obtained.
-Use the trampoline function to execute your modified recursive function.
-
-In the factorial example you provided:
-javascriptCopyconst factorial = (n) => {
-  if (n === 0) return 1; // The base case, to stop recursion
-  return n * factorial(n - 1); // The recursive call
-}
-To trampoline this, we would modify it like this:
-Modify the recursive function:
-javascriptCopyconst factorial = (n) => {
-  if (n === 0) return 1;
-  return () => n * factorial(n - 1); // Return a function instead of a direct recursive call
-}
-Create a trampoline function:
-javascriptCopyconst trampoline = (fn) => {
-  let result = fn;
-  while (typeof result === 'function') {
-    result = result();
-  }
-  return result;
-}
-Use the trampoline:
-javascriptCopyconst trampolinedFactorial = (n) => trampoline(() => factorial(n));
-This approach allows you to perform deep recursion without overflowing the call stack, as each recursive step is now handled iteratively by the trampoline function.
-For your task of flattening nested arrays, we'll follow a similar process. Would you like me to proceed with implementing the flattening function and its trampolined version?
-
-// Factorial function
-function factorial(n) {
-    if (n === 0) {
-        return 1;
-    }
-    return function() {
-        return n * factorial(n - 1);
-    };
-}
-
-// Trampoline function
-function trampoline(fn) {
-    var result = fn();
-    while (typeof result === 'function') {
-        result = result();
-    }
-    return result;
-}
-
-// Trampolined factorial function
-function trampolinedFactorial(n) {
-    return trampoline(function() {
-        return factorial(n);
-    });
-}
-// Usage
-console.log(trampolinedFactorial(5));  // Output: 120
-
-In this version:
-factorial is a regular function that returns either the base case (1) or a function for the recursive case.
-trampoline is a regular function that takes a function as an argument and repeatedly calls it until it gets a non-function result.
-trampolinedFactorial is a regular function that takes a number n and returns the result of passing an anonymous function to trampoline. This anonymous function calls factorial(n).
-This implementation achieves the same result as the arrow function version, but uses traditional function syntax throughout. It allows for the calculation of larger factorials without risking a stack overflow error.
 
 ###############
 
