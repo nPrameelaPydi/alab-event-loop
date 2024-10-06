@@ -81,17 +81,33 @@ function isPrime(num) {
     return true;
 }
 
-function displayPrimes(num) {
-    pEle.textContent = ''; //clearing previous results
-    let primes = [];
-    for (let i = 1; i <= num; i++) {
-        if (isPrime(i)) {
-            primes.push(i);
-        }
+function displayPrimes(num, current = 1, primes = []) {
+    //let primes = [];
+    if (current > num) {
+        pEle.textContent = primes.join(', ');
+        alert('Calculation complete!');
+        return;
     }
-    pEle.textContent = primes.join(', ')
-    alert('Calculation complete!');
+    if (isPrime(current)) {
+        primes.push(current);
+    }
+    pEle.textContent = primes.join(', ');
+
+    setTimeout(() => displayPrimes(num, current + 1, primes), 0);
+
 }
+
+//function displayPrimes(num) {
+//    pEle.textContent = ''; //clearing previous results
+//    let primes = [];
+//    for (let i = 1; i <= num; i++) {
+//        if (isPrime(i)) {
+//            primes.push(i);
+//        }
+//    }
+//    pEle.textContent = primes.join(', ')
+//    alert('Calculation complete!');
+//}
 
 //prompt user for n value
 const n = parseInt(prompt(`Enter a number: `));
